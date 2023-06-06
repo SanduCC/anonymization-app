@@ -40,7 +40,7 @@ dependencies {
     implementation 'com.google.code.findbugs:jsr305'
     implementation 'com.google.guava:guava:31.1-jre'
     implementation 'org.postgresql:postgresql'
-//    implementation 'org.liquibase:liquibase-core'
+    implementation 'org.liquibase:liquibase-core'
 
     errorprone 'com.google.errorprone:error_prone_core:2.18.0'
     compileOnly 'org.projectlombok:lombok'
