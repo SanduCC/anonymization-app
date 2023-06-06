@@ -1,0 +1,10 @@
+spring:
+  profiles:
+    active: dev
+  server:
+    port: 8080
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=anonymization_data
+    username: localuser
+    password: localpass
+    driver-class-name: org.postgresql.Driver
