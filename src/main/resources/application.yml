@@ -8,3 +8,6 @@ spring:
     username: localuser
     password: localpass
     driver-class-name: org.postgresql.Driver
+  liquibase:
+    enabled: true
+    changelog: db/db.changelog-master.yml
