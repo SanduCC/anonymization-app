@@ -11,3 +11,7 @@ Used DBeaver to connect to database and check data.
 
 Used Postman to test API.
 
+Application defaults to localhost:8080
+
+AnonymizedPersonAssembler contains the logic for anonymization.
+
