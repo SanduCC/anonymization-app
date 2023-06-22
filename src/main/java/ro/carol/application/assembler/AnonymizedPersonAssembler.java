@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 @RequiredArgsConstructor
 public class AnonymizedPersonAssembler {
 
-    private static final double EPSILON = 1.0; // Privacy budget
+    private static final double EPSILON = 0.1; // Privacy budget
     private static final double SENSITIVITY = 1.0; // Sensitivity of the field
 
     private final Random random = new SecureRandom();
@@ -24,46 +24,41 @@ public class AnonymizedPersonAssembler {
     public AnonymizedPerson assemble(Person person) {
         return AnonymizedPerson.builder()
                 .id(uuidSupplier.get())
-                .nume(addNoise(person.getNume()))
-                .prenume(addNoise(person.getPrenume()))
-                .cnp(addNoise(person.getCnp()))
-                .dataNasterii(addNoise(person.getDataNasterii()))
-                .adresa(addNoise(person.getAdresa()))
-                .telefon(addNoise(person.getTelefon()))
-                .email(addNoise(person.getEmail()))
+                .nume(person.getNume())
+                .prenume(person.getPrenume())
+                .cnp(generalizeCNP(person.getCnp()))
+                .dataNasterii(generalizeDateOfBirth(person.getDataNasterii()))
+                .adresa(generalizeAdresa(person.getAdresa()))
+                .telefon(generalizeTelefon(person.getTelefon()))
+                .email(generalizeEmail(person.getEmail()))
                 .build();
     }
 
-    private String addNoise(String value) {
-        if (value == null || value.isEmpty()) {
-            return value;
-        }
-        double scale = SENSITIVITY / EPSILON;
-        double noise = laplaceMechanism(scale);
-        int originalLength = value.length();
-        int anonymizedLength = originalLength + (int) noise;
-        if (anonymizedLength <= 0) {
-            return "";
-        } else if (anonymizedLength >= originalLength) {
-            return value;
-        } else {
-            return value.substring(0, anonymizedLength);
-        }
+    private String generalizeCNP(String cnp) {
+        // For simplicity, generalize the CNP by replacing the last four digits with 'XXXX'
+        return cnp.replace(cnp.substring(1,7), "XXXX");
     }
 
-    private LocalDate addNoise(LocalDate value) {
-        if (value == null) {
-            return null;
-        }
-        double scale = SENSITIVITY / EPSILON;
-        double noise = laplaceMechanism(scale);
-        return value.plusDays((long) noise);
+    private static LocalDate generalizeDateOfBirth(LocalDate dateOfBirth) {
+        // For simplicity, generalize the date of birth by replacing the year with 'XXXX'
+        return LocalDate.of(0, dateOfBirth.getMonth(), dateOfBirth.getDayOfMonth());
     }
 
-    private double laplaceMechanism(double scale) {
-        double uniform = random.nextDouble() - 0.5; // Uniform random number between -0.5 and 0.5
-        double laplace = -Math.signum(uniform) * Math.log(1 - 2 * Math.abs(uniform));
-        return scale * laplace;
+    private static String generalizeEmail(String email) {
+        // For simplicity, generalize the email by replacing the domain with 'example.com'
+        int atIndex = email.indexOf('@');
+        String username = email.substring(0, atIndex);
+        return username + "@example.com";
+    }
+
+    private static String generalizeAdresa(String adresa) {
+        // For simplicity, generalize the address by replacing it with 'Generalized Address'
+        return "Generalized Address";
+    }
+
+    private static String generalizeTelefon(String telefon) {
+        // For simplicity, generalize the phone number by replacing the last four digits with 'XXXX'
+        return telefon.substring(0, telefon.length() - 4) + "XXXX";
     }
 
 }
