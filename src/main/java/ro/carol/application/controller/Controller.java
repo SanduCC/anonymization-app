@@ -24,7 +24,7 @@ public class Controller {
         return anonymizationService.retrieveOriginalData();
     }
 
-    @PostMapping("/anonymized")
+    @PostMapping("/anonymize")
     public void anonymizeData() {
         anonymizationService.anonymizeData();
     }
