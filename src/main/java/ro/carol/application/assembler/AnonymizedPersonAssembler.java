@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 @RequiredArgsConstructor
 public class AnonymizedPersonAssembler {
 
-    private static final double EPSILON = 1.0; // Privacy budget
+    private static final double EPSILON = 0.1; // Privacy budget
     private static final double SENSITIVITY = 1.0; // Sensitivity of the field
 
     private final Random random = new SecureRandom();
@@ -24,13 +24,13 @@ public class AnonymizedPersonAssembler {
     public AnonymizedPerson assemble(Person person) {
         return AnonymizedPerson.builder()
                 .id(uuidSupplier.get())
-                .nume(addNoise(person.getNume()))
-                .prenume(addNoise(person.getPrenume()))
+                .nume(person.getNume())
+                .prenume(person.getPrenume())
                 .cnp(addNoise(person.getCnp()))
-                .dataNasterii(addNoise(person.getDataNasterii()))
+                .dataNasterii(addNoise(person.getDataNasterii())) //replace or add age
                 .adresa(addNoise(person.getAdresa()))
                 .telefon(addNoise(person.getTelefon()))
-                .email(addNoise(person.getEmail()))
+                .email(person.getEmail())
                 .build();
     }
 
