@@ -2,7 +2,7 @@
 
 --changeset user:1
 CREATE TABLE IF NOT EXISTS PERSON(
-    ID         INT          NOT NULL PRIMARY KEY,
+    ID         INT          PRIMARY KEY,
     NUME       VARCHAR(30)  NOT NULL,
     PRENUME    VARCHAR(50)  NOT NULL,
     CNP        VARCHAR(20)  NOT NULL,
