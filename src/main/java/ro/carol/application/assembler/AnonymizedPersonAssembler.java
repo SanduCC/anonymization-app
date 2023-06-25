@@ -17,6 +17,7 @@ public class AnonymizedPersonAssembler {
 
     private static final double EPSILON = 0.1; // Privacy budget
     private static final double SENSITIVITY = 1.0; // Sensitivity of the field
+    private static final double SCALE = SENSITIVITY / EPSILON;
 
     private final Random random = new SecureRandom();
     private final Supplier<UUID> uuidSupplier;
@@ -27,8 +28,8 @@ public class AnonymizedPersonAssembler {
                 .nume(person.getNume())
                 .prenume(person.getPrenume())
                 .cnp(addNoise(person.getCnp()))
-                .dataNasterii(addNoise(person.getDataNasterii())) //replace or add age
-                .adresa(addNoise(person.getAdresa()))
+                .varsta(addNoise(person.getVarsta())) //replace or add age
+                .codPostal(addNoise(person.getCodPostal()))
                 .telefon(addNoise(person.getTelefon()))
                 .email(person.getEmail())
                 .build();
@@ -51,12 +52,23 @@ public class AnonymizedPersonAssembler {
         }
     }
 
+    public int addNoise(int originalValue) {
+        // Generate a random noise sample from the Laplace distribution
+        double laplaceNoise = laplaceMechanism(SCALE);
+
+        // Add the noise to the original value
+        double noisyValue = originalValue + (laplaceNoise / SCALE);
+
+        // Round the noisy value to the nearest integer
+
+        return (int) Math.round(noisyValue);
+    }
+
     private LocalDate addNoise(LocalDate value) {
         if (value == null) {
             return null;
         }
-        double scale = SENSITIVITY / EPSILON;
-        double noise = laplaceMechanism(scale);
+        double noise = laplaceMechanism(SCALE);
         return value.plusDays((long) noise);
     }
 

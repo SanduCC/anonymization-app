@@ -8,6 +8,4 @@ import java.util.UUID;
 
 @Repository
 public interface AnonymizedPersonRepository extends JpaRepository<AnonymizedPerson, UUID> {
-
-
 }

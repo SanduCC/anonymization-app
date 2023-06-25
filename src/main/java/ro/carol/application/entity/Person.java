@@ -3,7 +3,6 @@ package ro.carol.application.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -19,25 +18,25 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
+    @Column(name = "NUME")
     private String nume;
 
-    @Column
+    @Column(name = "PRENUME")
     private String prenume;
 
-    @Column
+    @Column(name = "CNP")
     private String cnp;
 
-    @Column
-    private LocalDate dataNasterii;
+    @Column(name = "VARSTA")
+    private Integer varsta;
 
-    @Column
+    @Column(name = "EMAIL")
     private String email;
 
-    @Column
-    private String adresa;
+    @Column(name = "COD_POSTAL")
+    private String codPostal;
 
-    @Column
+    @Column(name = "TELEFON")
     private String telefon;
 
 }
