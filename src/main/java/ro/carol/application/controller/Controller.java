@@ -1,10 +1,8 @@
 package ro.carol.application.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import ro.carol.application.entity.AnonymizedPerson;
 import ro.carol.application.entity.Person;
 import ro.carol.application.service.AnonymizationService;
@@ -25,8 +23,10 @@ public class Controller {
     }
 
     @PostMapping("/anonymize")
-    public void anonymizeData() {
-        anonymizationService.anonymizeData();
+    public ResponseEntity<String> anonymizeData(@RequestParam(name = "k") Integer kAnonymity)
+    {
+        anonymizationService.anonymizeData(kAnonymity);
+        return ResponseEntity.ok("Data anonymized successfully");
     }
 
     @GetMapping("/anonymized")

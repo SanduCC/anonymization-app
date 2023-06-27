@@ -26,15 +26,15 @@ public class AnonymizationService {
         return persons;
     }
 
-    public void anonymizeData() {
+    public void anonymizeData(Integer kAnonymity) {
         // Retrieve all records from the "person" table
         List<Person> persons = personRepository.findAll();
 
         // Anonymize each person record and save it to the "anonymized_person" table
-        for (Person person : persons) {
-            AnonymizedPerson anonymizedPerson = anonymizedPersonAssembler.assemble(person);
+        persons.forEach(person -> {
+            var anonymizedPerson = anonymizedPersonAssembler.assemble(person, kAnonymity);
             anonymizedPersonRepository.save(anonymizedPerson);
-        }
+        });
     }
 
     public List<AnonymizedPerson> retrieveAnonymizedData() {
