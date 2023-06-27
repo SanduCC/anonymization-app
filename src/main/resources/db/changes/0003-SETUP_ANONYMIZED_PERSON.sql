@@ -1,0 +1,10 @@
+--liquibase formatted sql
+
+--changeset user:1
+CREATE TABLE IF NOT EXISTS ANONYMIZED_PERSON(
+    ID         UUID         PRIMARY KEY,
+    CNP        VARCHAR(20)  NOT NULL,
+    VARSTA     VARCHAR(3)   NOT NULL,
+    COD_POSTAL VARCHAR(15)  NOT NULL
+);
+--rollback DROP TABLE ANONYMIZED_PERSON;

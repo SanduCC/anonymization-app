@@ -6,6 +6,4 @@ import ro.carol.application.entity.Person;
 
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Integer> {
-
-
 }

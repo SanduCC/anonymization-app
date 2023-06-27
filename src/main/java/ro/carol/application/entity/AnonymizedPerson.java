@@ -2,8 +2,10 @@ package ro.carol.application.entity;
 
 import lombok.*;
 
-import javax.persistence.*;
-import java.time.LocalDate;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.UUID;
 
 @Entity
@@ -20,25 +22,13 @@ public class AnonymizedPerson {
     @Id
     private UUID id;
 
-    @Column
-    private String nume;
-
-    @Column
-    private String prenume;
-
-    @Column
+    @Column(name = "CNP")
     private String cnp;
 
-    @Column
-    private LocalDate dataNasterii;
+    @Column(name = "VARSTA")
+    private Integer varsta;
 
-    @Column
-    private String email;
-
-    @Column
-    private String adresa;
-
-    @Column
-    private String telefon;
+    @Column(name = "COD_POSTAL")
+    private String codPostal;
 
 }

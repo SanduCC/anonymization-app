@@ -1,12 +1,10 @@
 package ro.carol.application.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import ro.carol.application.dto.PersonDto;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import ro.carol.application.entity.AnonymizedPerson;
+import ro.carol.application.entity.Person;
 import ro.carol.application.service.AnonymizationService;
 
 import java.util.List;
@@ -20,13 +18,15 @@ public class Controller {
     private final AnonymizationService anonymizationService;
 
     @GetMapping("/original")
-    public List<PersonDto> getOriginalData() {
+    public List<Person> getOriginalData() {
         return anonymizationService.retrieveOriginalData();
     }
 
-    @PostMapping("/anonymized")
-    public void anonymizeData() {
-        anonymizationService.anonymizeData();
+    @PostMapping("/anonymize")
+    public ResponseEntity<String> anonymizeData(@RequestParam(name = "k") Integer kAnonymity)
+    {
+        anonymizationService.anonymizeData(kAnonymity);
+        return ResponseEntity.ok("Data anonymized successfully");
     }
 
     @GetMapping("/anonymized")

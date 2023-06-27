@@ -5,9 +5,6 @@ import org.springframework.stereotype.Component;
 import ro.carol.application.entity.AnonymizedPerson;
 import ro.carol.application.entity.Person;
 
-import java.security.SecureRandom;
-import java.time.LocalDate;
-import java.util.Random;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -15,55 +12,27 @@ import java.util.function.Supplier;
 @RequiredArgsConstructor
 public class AnonymizedPersonAssembler {
 
-    private static final double EPSILON = 1.0; // Privacy budget
-    private static final double SENSITIVITY = 1.0; // Sensitivity of the field
-
-    private final Random random = new SecureRandom();
     private final Supplier<UUID> uuidSupplier;
 
-    public AnonymizedPerson assemble(Person person) {
+    public AnonymizedPerson assemble(Person person, Integer kAnonymity) {
         return AnonymizedPerson.builder()
                 .id(uuidSupplier.get())
-                .nume(addNoise(person.getNume()))
-                .prenume(addNoise(person.getPrenume()))
-                .cnp(addNoise(person.getCnp()))
-                .dataNasterii(addNoise(person.getDataNasterii()))
-                .adresa(addNoise(person.getAdresa()))
-                .telefon(addNoise(person.getTelefon()))
-                .email(addNoise(person.getEmail()))
+                .cnp(kAnonymize(person.getCnp(), kAnonymity))
+                .varsta(person.getVarsta())
+                .codPostal(kAnonymize(person.getCodPostal(), kAnonymity))
                 .build();
     }
 
-    private String addNoise(String value) {
+    private String kAnonymize(String value, Integer k) {
+        // Check if the value is already anonymous or null
         if (value == null || value.isEmpty()) {
             return value;
         }
-        double scale = SENSITIVITY / EPSILON;
-        double noise = laplaceMechanism(scale);
-        int originalLength = value.length();
-        int anonymizedLength = originalLength + (int) noise;
-        if (anonymizedLength <= 0) {
-            return "";
-        } else if (anonymizedLength >= originalLength) {
-            return value;
-        } else {
-            return value.substring(0, anonymizedLength);
-        }
-    }
 
-    private LocalDate addNoise(LocalDate value) {
-        if (value == null) {
-            return null;
-        }
-        double scale = SENSITIVITY / EPSILON;
-        double noise = laplaceMechanism(scale);
-        return value.plusDays((long) noise);
-    }
+        // Generalize the value by replacing some characters with asterisks
+        int generalizationLength = Math.min(k, value.length());
 
-    private double laplaceMechanism(double scale) {
-        double uniform = random.nextDouble() - 0.5; // Uniform random number between -0.5 and 0.5
-        double laplace = -Math.signum(uniform) * Math.log(1 - 2 * Math.abs(uniform));
-        return scale * laplace;
+        return "*".repeat(generalizationLength) + value.substring(generalizationLength);
     }
 
 }
