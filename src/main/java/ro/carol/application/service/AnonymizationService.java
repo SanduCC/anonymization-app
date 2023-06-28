@@ -20,12 +20,23 @@ public class AnonymizationService {
     private final AnonymizedPersonAssembler anonymizedPersonAssembler;
     private final AnonymizedPersonRepository anonymizedPersonRepository;
 
+
+    /**
+     * Retrieves all the original data from the "person" table.
+     *
+     * @return a list of {@link Person} objects representing the original data
+     */
     public List<Person> retrieveOriginalData() {
         var persons = personRepository.findAll();
         log.info("Returning original data");
         return persons;
     }
 
+    /**
+     * Anonymizes the data from the "person" table and saves it to the "anonymized_person" table.
+     *
+     * @param kAnonymity the k-anonymity parameter used for anonymization
+     */
     public void anonymizeData(Integer kAnonymity) {
         // Retrieve all records from the "person" table
         List<Person> persons = personRepository.findAll();
@@ -38,6 +49,11 @@ public class AnonymizationService {
         });
     }
 
+    /**
+     * Retrieves all the anonymized data from the "anonymized_person" table.
+     *
+     * @return a list of {@link AnonymizedPerson} objects representing the anonymized data
+     */
     public List<AnonymizedPerson> retrieveAnonymizedData() {
         log.info("Returning anonymized data");
         return anonymizedPersonRepository.findAll();

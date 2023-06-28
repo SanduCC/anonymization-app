@@ -29,7 +29,7 @@ public class AnonymizedPersonAssembler {
             return value;
         }
 
-        // Generalize the value by replacing some characters with asterisks
+        // Generalize the value by replacing first k characters with asterisks
         int generalizationLength = Math.min(k, value.length());
 
         return "*".repeat(generalizationLength) + value.substring(generalizationLength);
