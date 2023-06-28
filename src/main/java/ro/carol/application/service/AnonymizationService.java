@@ -33,11 +33,13 @@ public class AnonymizationService {
         // Anonymize each person record and save it to the "anonymized_person" table
         persons.forEach(person -> {
             var anonymizedPerson = anonymizedPersonAssembler.assemble(person, kAnonymity);
+            log.info("Saving anonymized person data");
             anonymizedPersonRepository.save(anonymizedPerson);
         });
     }
 
     public List<AnonymizedPerson> retrieveAnonymizedData() {
+        log.info("Returning anonymized data");
         return anonymizedPersonRepository.findAll();
     }
 

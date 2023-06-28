@@ -18,15 +18,14 @@ public class Controller {
     private final AnonymizationService anonymizationService;
 
     @GetMapping("/original")
-    public List<Person> getOriginalData() {
+    public List<Person> retrieveOriginalData() {
         return anonymizationService.retrieveOriginalData();
     }
 
     @PostMapping("/anonymize")
-    public ResponseEntity<String> anonymizeData(@RequestParam(name = "k") Integer kAnonymity)
-    {
+    public ResponseEntity<String> anonymizeData(@RequestParam(name = "k") Integer kAnonymity) {
         anonymizationService.anonymizeData(kAnonymity);
-        return ResponseEntity.ok("Data anonymized successfully");
+        return ResponseEntity.ok("Data anonymized successfully for k = " + kAnonymity);
     }
 
     @GetMapping("/anonymized")
