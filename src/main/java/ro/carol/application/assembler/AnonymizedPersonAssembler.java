@@ -30,9 +30,9 @@ public class AnonymizedPersonAssembler {
     public AnonymizedPerson assemble(Person person, Integer kAnonymity, Integer lDiversity) {
         return AnonymizedPerson.builder()
                 .id(uuidSupplier.get())
-                .cnp(kAnonymize(person.getCnp(), kAnonymity, lDiversity))
+                .cnp(kAnonymizeAndLDiversity(person.getCnp(), kAnonymity, lDiversity))
                 .varsta(person.getVarsta())
-                .codPostal(kAnonymize(person.getCodPostal(), kAnonymity, lDiversity))
+                .codPostal(kAnonymizeAndLDiversity(person.getCodPostal(), kAnonymity, lDiversity))
                 .build();
     }
 
@@ -48,7 +48,7 @@ public class AnonymizedPersonAssembler {
         return "*".repeat(generalizationLength) + value.substring(generalizationLength);
     }
 
-    private String kAnonymize(String value, Integer k, Integer l) {
+    private String kAnonymizeAndLDiversity(String value, Integer k, Integer l) {
         // Check if the value is already anonymous or null
         if (value == null || value.isEmpty()) {
             return value;
@@ -64,13 +64,19 @@ public class AnonymizedPersonAssembler {
         return diversifiedValues.get(randomIndex);
     }
 
+
+    /**
+     * Generates diversified values for a given value by modifying the characters beyond the original length.
+     * The original value is also included as one of the diversified values.
+     *
+     * @param value the original value to be diversified
+     * @param l     the number of diversified values to be generated
+     * @return a list of diversified values
+     */
     private List<String> generateDiversifiedValues(String value, Integer l) {
         List<String> diversifiedValues = new ArrayList<>();
-
-        // Add the original value as one of the diversified values
         diversifiedValues.add(value);
 
-        // Generate additional diversified values by modifying the characters beyond the original length
         int originalLength = value.length();
 
         for (int i = originalLength; i < originalLength + l - 1; i++) {
@@ -79,4 +85,5 @@ public class AnonymizedPersonAssembler {
 
         return diversifiedValues;
     }
+    
 }
