@@ -25,7 +25,5 @@ w
 G.idea/sonarlint/issuestore/0/5/05efc8b1657769a27696d478ded1e95f38737233,3\c\3c8c56407c35e5f5ebbd6c7250a79af8128a13a6
 Å
 Q.idea/sonarlint/securityhotspotstore/f/b/fbe448ebfc3eb2d4e308f6b8b043666f5b57235e,2\a\2a357145b04aeee0545d8bc616c6d89a975ff771
-k
-;src/main/java/ro/carol/application/configuration/Beans.java,b\2\b28c4e3e44884a2bb20c207502829cdbb77c7d0b
 s
 Csrc/main/java/ro/carol/application/repository/PersonRepository.java,3\2\322c60a6cf9d3001bb2c295cf701d961329c2034

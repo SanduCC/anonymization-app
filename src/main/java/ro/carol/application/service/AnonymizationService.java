@@ -37,14 +37,26 @@ public class AnonymizationService {
      *
      * @param kAnonymity the k-anonymity parameter used for anonymization
      */
-    public void anonymizeData(Integer kAnonymity) {
+    public void kAnonymity(Integer kAnonymity) {
         // Retrieve all records from the "person" table
         List<Person> persons = personRepository.findAll();
 
         // Anonymize each person record and save it to the "anonymized_person" table
+        log.info("Saving anonymized person data");
         persons.forEach(person -> {
             var anonymizedPerson = anonymizedPersonAssembler.assemble(person, kAnonymity);
-            log.info("Saving anonymized person data");
+            anonymizedPersonRepository.save(anonymizedPerson);
+        });
+    }
+
+    public void kAnonymityAndLDiversity(Integer kAnonymity, Integer lDiversity) {
+        // Retrieve all records from the "person" table
+        List<Person> persons = personRepository.findAll();
+
+        // Anonymize each person record and save it to the "anonymized_person" table
+        log.info("Saving anonymized person data");
+        persons.forEach(person -> {
+            var anonymizedPerson = anonymizedPersonAssembler.assemble(person, kAnonymity, lDiversity);
             anonymizedPersonRepository.save(anonymizedPerson);
         });
     }

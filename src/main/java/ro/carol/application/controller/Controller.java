@@ -34,8 +34,15 @@ public class Controller {
      */
     @PostMapping("/anonymize")
     public ResponseEntity<String> anonymizeData(@RequestParam(name = "k") Integer kAnonymity) {
-        anonymizationService.anonymizeData(kAnonymity);
+        anonymizationService.kAnonymity(kAnonymity);
         return ResponseEntity.ok("Data anonymized successfully for k = " + kAnonymity);
+    }
+
+    @PostMapping(value = "/anonymize", params = {"k", "l"})
+    public ResponseEntity<String> anonymizeData(@RequestParam(name = "k") Integer kAnonymity,
+                                                @RequestParam(name = "l") Integer lDiversity) {
+        anonymizationService.kAnonymityAndLDiversity(kAnonymity, lDiversity);
+        return ResponseEntity.ok("Data anonymized successfully for k = " + kAnonymity + " and l = " + lDiversity);
     }
 
     /**

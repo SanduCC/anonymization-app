@@ -65,7 +65,7 @@ class AnonymizationServiceTest {
         when(anonymizedPersonAssembler.assemble(any(Person.class), anyInt())).thenReturn(anonymizedPerson1, anonymizedPerson2);
 
         // when
-        anonymizationService.anonymizeData(2);
+        anonymizationService.kAnonymity(2);
 
         // then
         verify(personRepository, times(1)).findAll();
