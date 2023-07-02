@@ -1,5 +1,5 @@
 Create docker container : 
-docker run --name anonymization_data --rm -e POSTGRES_USER=localuser -e POSTGRES_PASSWORD=localpass 
+docker run --name anonymization_data -e POSTGRES_USER=localuser -e POSTGRES_PASSWORD=localpass 
 -v /tmp:/var/lib/postgresql/data -p 5432:5432 -it postgres
 
 Liquibase scripts executes automatically on application startup. It creates the database and tables and inserts test data.
