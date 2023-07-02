@@ -1,6 +1,4 @@
 
-\
-,src/main/java/ro/carol/application/Main.java,9\2\92c86078c773cfc762c100a036bccb43bec1a7a0
 w
 G.idea/sonarlint/issuestore/f/b/fbe448ebfc3eb2d4e308f6b8b043666f5b57235e,5\2\52114fdaa426e9b83a3c5df4e11c4f0ebbcd814b
 w

@@ -147,7 +147,7 @@ VALUES
         'Thomas',
         'Alexander',
         '930509423456',
-        '73',
+        '32',
         '1234',
         '555-234-5678',
         'alexander.thomas@example.com'
