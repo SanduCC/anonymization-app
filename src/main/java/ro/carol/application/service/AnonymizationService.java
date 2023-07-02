@@ -49,6 +49,14 @@ public class AnonymizationService {
         });
     }
 
+
+    /**
+     * Anonymizes the data from the "person" table using both k-anonymity and l-diversity parameters,
+     * and saves it to the "anonymized_person" table.
+     *
+     * @param kAnonymity the k-anonymity parameter used for anonymization
+     * @param lDiversity the l-diversity parameter used for anonymization
+     */
     public void kAnonymityAndLDiversity(Integer kAnonymity, Integer lDiversity) {
         // Retrieve all records from the "person" table
         List<Person> persons = personRepository.findAll();

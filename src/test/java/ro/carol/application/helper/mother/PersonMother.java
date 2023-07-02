@@ -20,7 +20,7 @@ public class PersonMother {
     public static Person michael() {
         Person person = new Person();
         person.setId(2);
-        person.setNume("Jackson");
+        person.setNume("Johnson");
         person.setPrenume("Michael");
         person.setCnp("1345678901234");
         person.setVarsta(50);

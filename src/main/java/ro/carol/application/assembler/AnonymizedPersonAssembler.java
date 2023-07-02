@@ -18,6 +18,13 @@ public class AnonymizedPersonAssembler {
     private final Supplier<UUID> uuidSupplier;
     private final Supplier<Random> random;
 
+    /**
+     * Assembles an {@link AnonymizedPerson} object from a {@link Person} object with k-anonymity applied to sensitive attributes.
+     *
+     * @param person       the {@link Person} object to be anonymized
+     * @param kAnonymity   the number of characters to be replaced with asterisks for k-anonymity
+     * @return an {@link AnonymizedPerson} object with k-anonymity applied to sensitive attributes
+     */
     public AnonymizedPerson assemble(Person person, Integer kAnonymity) {
         return AnonymizedPerson.builder()
                 .id(uuidSupplier.get())
@@ -27,6 +34,16 @@ public class AnonymizedPersonAssembler {
                 .build();
     }
 
+
+    /**
+     * Assembles an {@link AnonymizedPerson} object from a {@link Person} object with k-anonymity and l-diversity applied to
+     * sensitive attributes.
+     *
+     * @param person       the {@link Person} object to be anonymized and diversified
+     * @param kAnonymity   the number of characters to be replaced with asterisks for k-anonymity
+     * @param lDiversity   the number of diversified values to be generated for l-diversity
+     * @return an {@link AnonymizedPerson} object with k-anonymity and l-diversity applied to sensitive attributes
+     */
     public AnonymizedPerson assemble(Person person, Integer kAnonymity, Integer lDiversity) {
         return AnonymizedPerson.builder()
                 .id(uuidSupplier.get())
@@ -36,29 +53,39 @@ public class AnonymizedPersonAssembler {
                 .build();
     }
 
+    /**
+     * Applies k-anonymity to a given value.
+     *
+     * @param value the value to be anonymized
+     * @param k     the number of characters to be replaced with asterisks for k-anonymity
+     * @return an anonymized value
+     */
     private String kAnonymize(String value, Integer k) {
-        // Check if the value is already anonymous or null
         if (value == null || value.isEmpty()) {
             return value;
         }
 
-        // Generalize the value by replacing first k characters with asterisks
         int generalizationLength = Math.min(k, value.length());
 
         return "*".repeat(generalizationLength) + value.substring(generalizationLength);
     }
 
+    /**
+     * Applies k-anonymity and l-diversity to a given value.
+     *
+     * @param value the value to be anonymized and diversified
+     * @param k     the number of characters to be replaced with asterisks for k-anonymity
+     * @param l     the number of diversified values to be generated for l-diversity
+     * @return a diversified and anonymized value
+     */
     private String kAnonymizeAndLDiversity(String value, Integer k, Integer l) {
-        // Check if the value is already anonymous or null
         if (value == null || value.isEmpty()) {
             return value;
         }
 
-        // Generalize the value by replacing first k characters with asterisks
         int generalizationLength = Math.min(k, value.length());
         String generalizedValue = "*".repeat(generalizationLength) + value.substring(generalizationLength);
 
-        // Diversify the sensitive attribute
         List<String> diversifiedValues = generateDiversifiedValues(generalizedValue, l);
         int randomIndex = random.get().nextInt(diversifiedValues.size());
         return diversifiedValues.get(randomIndex);

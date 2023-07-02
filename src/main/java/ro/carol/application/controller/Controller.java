@@ -38,6 +38,14 @@ public class Controller {
         return ResponseEntity.ok("Data anonymized successfully for k = " + kAnonymity);
     }
 
+
+    /**
+     * Anonymizes the data for a given k-anonymity and l-diversity value.
+     *
+     * @param kAnonymity the k-anonymity value
+     * @param lDiversity the l-diversity value
+     * @return a response entity with a success message
+     */
     @PostMapping(value = "/anonymize", params = {"k", "l"})
     public ResponseEntity<String> anonymizeData(@RequestParam(name = "k") Integer kAnonymity,
                                                 @RequestParam(name = "l") Integer lDiversity) {

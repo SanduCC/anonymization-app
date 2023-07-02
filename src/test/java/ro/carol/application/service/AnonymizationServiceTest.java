@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ro.carol.application.assembler.AnonymizedPersonAssembler;
 import ro.carol.application.entity.AnonymizedPerson;
 import ro.carol.application.entity.Person;
+import ro.carol.application.helper.mother.AnonymizedPersonMother;
 import ro.carol.application.helper.mother.PersonMother;
 import ro.carol.application.repository.AnonymizedPersonRepository;
 import ro.carol.application.repository.PersonRepository;
@@ -16,7 +17,7 @@ import ro.carol.application.repository.PersonRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -35,11 +36,14 @@ class AnonymizationServiceTest {
     private AnonymizationService anonymizationService;
 
     private final List<Person> persons = new ArrayList<>();
+    private final List<AnonymizedPerson> anonymizedPersons = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
         persons.add(PersonMother.john());
         persons.add(PersonMother.michael());
+        anonymizedPersons.add(AnonymizedPersonMother.anon1());
+        anonymizedPersons.add(AnonymizedPersonMother.anon2());
     }
 
     @Test
@@ -51,7 +55,7 @@ class AnonymizationServiceTest {
         List<Person> result = anonymizationService.retrieveOriginalData();
 
         // then
-        assertEquals(persons, result);
+        assertThat(persons).isEqualTo(result);
         verify(personRepository).findAll();
     }
 
@@ -59,16 +63,14 @@ class AnonymizationServiceTest {
     void anonymizeData() {
         // given
         when(personRepository.findAll()).thenReturn(persons);
-
-        AnonymizedPerson anonymizedPerson1 = new AnonymizedPerson("John", "Doe", "johndoe@example.com");
-        AnonymizedPerson anonymizedPerson2 = new AnonymizedPerson("Jane", "Doe", "janedoe@example.com");
-        when(anonymizedPersonAssembler.assemble(any(Person.class), anyInt())).thenReturn(anonymizedPerson1, anonymizedPerson2);
+        when(anonymizedPersonAssembler.assemble(persons.get(0), 3)).thenReturn(anonymizedPersons.get(0));
+        when(anonymizedPersonAssembler.assemble(persons.get(1), 3)).thenReturn(anonymizedPersons.get(1));
 
         // when
         anonymizationService.kAnonymity(2);
 
         // then
-        verify(personRepository, times(1)).findAll();
+        verify(personRepository).findAll();
         verify(anonymizedPersonAssembler, times(2)).assemble(any(Person.class), anyInt());
         verify(anonymizedPersonRepository, times(2)).save(any(AnonymizedPerson.class));
     }
@@ -82,7 +84,8 @@ class AnonymizationServiceTest {
         List<AnonymizedPerson> result = anonymizationService.retrieveAnonymizedData();
 
         // then
-        assertEquals(anonymizedPersons, result);
+        assertThat(anonymizedPersons).isEqualTo(result);
         verify(anonymizedPersonRepository, times(1)).findAll();
     }
+
 }
