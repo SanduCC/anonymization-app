@@ -25,3 +25,21 @@ G.idea/sonarlint/issuestore/0/5/05efc8b1657769a27696d478ded1e95f38737233,3\c\3c
 Q.idea/sonarlint/securityhotspotstore/f/b/fbe448ebfc3eb2d4e308f6b8b043666f5b57235e,2\a\2a357145b04aeee0545d8bc616c6d89a975ff771
 s
 Csrc/main/java/ro/carol/application/repository/PersonRepository.java,3\2\322c60a6cf9d3001bb2c295cf701d961329c2034
+o
+?src/main/java/ro/carol/application/entity/AnonymizedPerson.java,e\0\e0c8a7e922e467c014b053c5445c8617ede7ab79
+e
+5src/main/java/ro/carol/application/entity/Person.java,1\b\1b9ab666fa41cc972fc78b2e568740271bcb30da
+k
+;src/main/java/ro/carol/application/configuration/Beans.java,b\2\b28c4e3e44884a2bb20c207502829cdbb77c7d0b
+
+Osrc/test/java/ro/carol/application/assembler/AnonymizedPersonAssemblerTest.java,8\4\84ea6f448818c4d7bc829f6df24f0dd6bfde308f
+|
+Lsrc/test/java/ro/carol/application/helper/mother/AnonymizedPersonMother.java,3\3\33d22f2f33cd1505ba58f5ad7d11b211db228248
+r
+Bsrc/test/java/ro/carol/application/helper/mother/PersonMother.java,a\c\ac99a52eaf02e8a44c2bf3b54776e02c60b1bd33
+<
+build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
+\
+,src/main/java/ro/carol/application/Main.java,9\2\92c86078c773cfc762c100a036bccb43bec1a7a0
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
